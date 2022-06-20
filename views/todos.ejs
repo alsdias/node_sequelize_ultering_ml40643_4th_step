@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="/images/todo.ico" type="image/x-icon" />
+        <title>edit:&nbsp;
+            <%=title%>
+        </title>
+        <!-- Bootstrap core CSS -->
+        <link href="/stylesheets/style.css" rel="stylesheet">
+        <link href="/stylesheets/pinegrow/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="/stylesheets/pinegrow/starter-template.css" rel="stylesheet">
+        <link href="/stylesheets/pinegrow/bootstrap/css/free-icons.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <%- include('menu')  %>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+                    <img class="border border-0 border-light img-thumbnail w-75" src="../../images/todo_150.jpg" alt="">
+				</div>
+				<div class="align-middle col-md-6 mt-5 text-center">
+                    <h3 class="m-n3">Maintenance&nbsp</h3></br>
+                    <h5 id="page_title"><%=title%></h5>
+                    <h5><%=sdos.length%>&nbsp;<%= sdos.length === 1 ? 'task' : 'tasks' %></h5>
+				</div>
+				<div class="col-md-3"></div>
+				<div class="col-md-3"></div>
+				<div class="col-md-3"></div>
+            </div>
+            <div style="height: 50px;"></div>
+
+            <form id="todo_form">
+                <% sdos.forEach(todo => { %>
+                    <div class="row" style="padding: 2px;">
+                        <div class="col-md-2">
+                            <input onclick="openTodo(this)" name="todo_id" id="todo_id" type="text" readonly class="" value="<%=todo.id%>" style="height: 25px; width: 96%; padding-left: 25px; padding-top: 0px; font-weight: 700; color: #6f6c6c; font-size: 19px; border-color: transparent;">
+                        </div>
+                        <div class="col-md-5">
+                            <p>&nbsp;</p>
+                        </div>
+                        <div class="col-md-3" style="text-align: center;">
+                            <div id="btn_update_todo" class="btn btn-primary icon-config icon-update20g" style="margin-top: 0px; padding-right: 25px;" onclick="updateTodo()"></div>
+                            <button id="btn_delete_todo" type="button" class="btn btn-primary icon-config icon-delete20g" data-toggle="modal" data-target="#deleteTodoModal" style="margin-top: 0px; padding-right: 25px;"></button>
+                            <button id="btn_create_todo" type="button" class="btn btn-primary icon-config icon-create20g" data-toggle="modal" data-target="#createTodoModal" style="margin-top: 0px;"></button>
+                        </div>
+                        <div class="col-md-2">
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0px;">
+                        <div class="col-md-10">
+                            <input name="title" type="text" id="title_id" class="form-control" value="<%=todo.title%>" style="width: 98%; margin-top: -10px; margin-bottom: 10px; border-color: white; border-bottom-color: rgb(186, 183, 183);">
+                        </div>
+                        <div class="col-md-2">
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
+                <% }) %>
+            </form>
+
+            <!-- xxModal CREATE NEW TODO -->
+            <div class="modal fade" id="createTodoModal" tabindex="-1" role="dialog" aria-labelledby="createTodoModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="/todo/createbytitle" method="post" id="modal_todo_form">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createTodoModalLabel">New Todo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input name="titlecreation" id="titlecreation_id" type="text" class="form-control-plaintext form-control" style="padding: 5px; background: #F2F8FD" placeholder="please, title here..."/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Skip</button>
+                                <button type="submit" class="btn btn-primary">Create Todo</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- xxModal CONFIRM TODO DELETION -->
+            <div class="modal fade" id="deleteTodoModal" tabindex="-1" role="dialog" aria-labelledby="deleteTodoModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteTodoModalLabel">CONFIRM TODO DELETION?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-primary" onclick="deleteTodo()">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.container -->
+            <!-- Bootstrap core JavaScript
+            L:\work\devcli_\javascript\jstopics\pinegrow_b4\node\public\stylesheets\pinegrow\todos_search.html
+            ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="/stylesheets/pinegrow/assets/js/jquery.min.js"></script>
+        <script src="/stylesheets/pinegrow/assets/js/popper.js"></script>
+        <script src="/stylesheets/pinegrow/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+
+            function redirectToListall(sdo) {
+                window.location.assign('/todo/listall');
+            }
+
+            function openTodo(thisObj) {
+                let id = thisObj.value;
+                window.location.assign("/todo/edit/" + id);
+            }
+
+            function updateTodo() {
+                let id = $('#todo_id').val();
+                let title = $('#title_id').val();
+                let kvdata = {id: id, title: title};
+                updateTodoAction(kvdata);
+            }
+
+            function updateTodoAction(kvdata) {
+                json = JSON.stringify(kvdata);
+                const XHR = new XMLHttpRequest();
+                XHR.addEventListener( "load", function(event) {
+                    updateTodoForm( event.target.responseText );
+                });
+                XHR.addEventListener( "error", function( event ) {
+                    alert('WARN: todo update failed. Please, refresh the page and try again.');
+                });
+                XHR.open( "POST", "/todo/update" , true);
+                XHR.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                XHR.send(json);
+            }
+
+            function deleteTodo(obj) {
+                let id = document.getElementById('todo_id').value;
+                let kvdata = {id: id};
+                deleteTodoByIdAction(kvdata);
+            }
+
+            function deleteTodoByIdAction(kvdata) {
+                json = JSON.stringify(kvdata);
+                const XHR = new XMLHttpRequest();
+                XHR.addEventListener( "load", function(event) {
+                    redirectToListall( event.target.responseText );
+                });
+                XHR.addEventListener( "error", function( event ) {
+                    alert('WARN: deletion failed. Please, refresh the page and try again.');
+                });
+                XHR.open( "POST", "/todo/deletebyid" , true);
+                XHR.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                XHR.send(json);
+            }
+
+            function updateTodoForm(sdo) {
+                if (sdo.lenght > 1) {
+                    alert('WARN: updated operation reported issue: \n' + sdo + '\nRefresh the page to check.');
+                }
+                $('#title_id').css('background', '#E1E1E1');
+            }
+
+            function updateItem(obj) {
+                let fk = document.getElementById('todo_id').value;
+                let id = obj.attributes.id.value.replace('btn_', '');
+                let iid = document.getElementById('iid_' + id).value;
+                let i_desc = document.getElementById('i_desc_' + id).value;
+                let kvdata = {fk: fk, id: iid, desc: i_desc};
+                updateItemAction(kvdata);
+            }
+
+            function deleteItem(obj) {
+                let fk = document.getElementById('todo_id').value;
+                let id = obj.attributes.id.value.replace('btn_', '');
+                let iid = document.getElementById('iid_' + id).value;
+                let i_desc = document.getElementById('i_desc_' + id).value;
+                let kvdata = {fk: fk, id: iid, desc: i_desc};
+                deleteItemAction(kvdata);
+            }
+
+            function createItem(obj) {
+                let fk = document.getElementById('todo_id').value;
+                let kvdata = {fk: fk, desc: ''};
+                let parent_id = obj.attributes.id.value.replace('btn_', '');
+                createItemAction(parent_id, kvdata);
+            }
+
+            function createItemForm(parent_id, sdo) {
+                let json = JSON.parse(sdo);
+                let element = itemRow(json.id, json.description);
+                $('#div_' + parent_id).append(element);
+            }
+
+            function updateItemForm(json) {
+                let item = JSON.parse(json);
+                $('#i_desc_' + item.id).css('background', '#E1E1E1');
+            }
+
+            function updateDeletedItemForm(json) {
+                let item = JSON.parse(json);
+                let field = $('#i_desc_' + item.id);
+                field.css('background', '#E1B7FF');
+                field.prop("readonly", true);
+            }
+
+            function updateItemAction(kvdata) {
+                json = JSON.stringify(kvdata);
+                const XHR = new XMLHttpRequest();
+                XHR.addEventListener( "load", function(event) {
+                    updateItemForm( event.target.responseText );
+                });
+                XHR.addEventListener( "error", function( event ) {
+                    alert('WARN: updated failed. Please, refresh the page and try again.');
+                });
+                XHR.open( "POST", "/todo/updateitem" , true);
+                XHR.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                XHR.send(json);
+            }
+
+            function createItemAction(parent_id, kvdata) {
+                json = JSON.stringify(kvdata);
+                const XHR = new XMLHttpRequest();
+                XHR.addEventListener( "load", function(event) {
+                    createItemForm(parent_id, event.target.responseText );
+                });
+                XHR.addEventListener( "error", function( event ) {
+                    alert('WARN: failed to create an item. Please, refresh the page and try again.');
+                });
+                XHR.open( "POST", "/todo/createitem" , true);
+                XHR.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                XHR.send(json);
+            }
+
+            function deleteItemAction(kvdata) {
+                json = JSON.stringify(kvdata);
+                const XHR = new XMLHttpRequest();
+                XHR.addEventListener( "load", function(event) {
+                    updateDeletedItemForm( event.target.responseText );
+                });
+                XHR.addEventListener( "error", function( event ) {
+                    alert('WARN: deletion failed. Please, refresh the page and try again.');
+                });
+                XHR.open( "POST", "/todo/deleteitem" , true);
+                XHR.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                XHR.send(json);
+            }
+
+
+            function itemRow(id, desc) {
+                let element = '\n';
+                element += '                        <div id="div_' + id + '" style="margin-top: 10px;">\n';
+                element += '                            <div class="row" style="padding: 0px; margin-top: 10px; margin-left: 10px;">\n';
+                element += '                                <div class="col-md-1">\n';
+                element += '                                    <input name="iid" id="iid_' + id + '" type="text" readonly class="form-control-plaintext" value="' + id + '" style="text-align: center; margin-top: 10px; font-weight: 700; color: #6f6c6c; font-size: 19px;">\n';
+                element += '                                </div>\n';
+                element += '                                <div class="col-md-9">\n';
+                element += '                                    <textarea name="i_desc" id="i_desc_' + id + '" type="text" class="form-control" style="width: 96%; margin: 2%;">' + desc + '</textarea>\n';
+                element += '                                </div>\n';
+                element += '                                <div class="col-md-2" style="text-align: center;">\n';
+                element += '                                    <div id="btn_' + id + '" class="btn btn-primary icon-config icon-update20g" style="margin-top: 22px; margin-right: 10px;" onclick="updateItem(this)"></div>\n';
+                element += '                                    <div id="btn_' + id + '" class="btn btn-primary icon-config icon-delete20g" style="margin-top: 20px; margin-right: 10px;" onclick="deleteItem(this)"></div>\n';
+                element += '                                    <div id="btn_' + id + '" class="btn btn-primary icon-config icon-create20g" style="margin-top: 20px;" onclick="createItem(this)"></div>\n';
+                element += '                                </div>\n'
+                element += '                            </div>\n'
+                element += '                        </div>\n'
+                return element;
+            }
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title><%= title %></title>
+	<!-- Bootstrap core CSS -->
+	<link href="/stylesheets/pinegrow/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="/stylesheets/pinegrow/starter-template.css" rel="stylesheet">
+</head>
+<body>
+	<%- include('menu')  %>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<img class="border border-0 border-light img-thumbnail w-50" src="../../images/todo_150.jpg" alt="">
+			</div>
+			<div class="align-middle col-md-6 mt-5 text-center">
+				<h1 class="m-n3">User list</h1>
+			</div>
+			<div class="col-md-3"><h6><a style = "margin-top:50px; margin-bottom: 50px;" href="http://localhost:3000/users">localhost:3000/users</a></h6></div>
+			<div class="col-md-3"></div>
+			<div class="col-md-3"></div>
+		</div>
+		<div class="starter-template"></div>
+		<div>
+			<div class="row" style="margin-bottom: 30px; padding-bottom: 10px; border-bottom: 1px solid gray;">
+				<div class="col-md-4">
+					<h3>Name</h3>
+				</div>
+				<div class="col-md-8">
+					<h3>Last Update</h3>
+				</div>
+			</div>
+		</div>
+
+		<% users.forEach(user => { %>
+			<div>
+					<div class="row" style="margin-top: 15px;">
+							<div class="col-md-4">
+									<p><%= user.username %></p>
+							</div>
+							<div class="col-md-4">
+									<p><%= user.updatedAt.toLocaleDateString("en-US") %></p>
+							</div>
+					</div>
+			</div>
+	<% }) %>
+
+	</div>
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/stylesheets/pinegrow/assets/js/jquery.min.js"></script>
+	<script src="/stylesheets/pinegrow/assets/js/popper.js"></script>
+	<script src="/stylesheets/pinegrow/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

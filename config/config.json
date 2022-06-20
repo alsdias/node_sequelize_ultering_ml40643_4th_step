@@ -1,0 +1,38 @@
+{
+    "development": {
+        "username": "postgres",
+        "password": "postgres",
+        "database": "rin544_dev",
+        "host": "127.0.0.1",
+        "dialect": "postgres",
+        "port": "5432"
+    },
+    "db_dev_url": "postgres://postgres:postgres@localhost:5432/rin544_dev",
+    "test": {
+        "username": "postgres",
+        "password": "postgres",
+        "database": "rin544_test",
+        "host": "127.0.0.1",
+        "dialect": "postgres",
+        "port": "5432"
+    },
+    "db_test_url": "postgres://postgres:postgres@localhost:5432/rin544_test",
+    "production": {
+        "username": "postgres",
+        "password": "postgres",
+        "database": "rin544",
+        "host": "127.0.0.1",
+        "dialect": "postgres",
+        "port": "5432"
+    },
+    "db_prod_url": "postgres://postgres:postgres@localhost:5432/rin544",
+    "cloud": {
+        "username": "username",
+        "password": "secret",
+        "database": "rin544",
+        "host": "xxx.elephantsql.com",
+        "dialect": "postgres",
+        "port": "5432"
+    },
+    "db_cloud_url": "postgres://username:secret@xxx.elephantsql.com/username"
+}
