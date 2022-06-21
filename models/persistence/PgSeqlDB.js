@@ -25,10 +25,9 @@ class PgSeqlDB {
         } else if (process.env.APP_ENV == 'test') {
             console.log('[INFO]: database configuration set to test environment.')
             return Dbconfig.test;
-        } else {
-            console.log('[WARN]: database configuration not defined, assuming default (dev): ' + Dbconfig.development.database);
-            return Dbconfig.development;
         }
+        console.log('[WARN]: database configuration not defined, assuming default (dev): ' + Dbconfig.development.database);
+        return Dbconfig.development;
     }
 
 
