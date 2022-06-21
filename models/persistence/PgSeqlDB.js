@@ -40,9 +40,13 @@ class PgSeqlDB {
 
     connection() {
         console.log('[INFO]: authenticating database: ' + this.dbconfig.database)
-        let sequelize = new Sequelize(this.dbconfig.database, this.dbconfig.username, this.dbconfig.password, {
-            dialect: this.dbconfig.dialect,
+        let sequelize = new Sequelize({
+            username: this.dbconfig.username,
+            password: this.dbconfig.password,
+            database: this.dbconfig.database,
+            host: this.dbconfig.host,
             port: this.dbconfig.port,
+            dialect: this.dbconfig.dialect
         });
         sequelize.authenticate(this.dbconfig).then(function () {
             console.log('[INFO]: database authenticated');
