@@ -3,7 +3,7 @@ last update: 03/11/20 13:17:15
 s.dias.andre.luiz@gmail.com # 03/11/20 13:17:15
 */
 'use strict';
-const pgSeqlDB = require('./PgSeqlDB');
+const PgSeqlDB = require('./PgSeqlDB');
 var Sequelize = require('sequelize');
 const Tools = require('../../utils/Tools');
 const TodoDTO = require('../dto/TodoDTO');
@@ -19,7 +19,7 @@ class TodoItemDB {
 
     constructor(createTable) {
         this.createTable = createTable;
-        this.pgSeqlDB = new pgSeqlDB();
+        this.pgSeqlDB = new PgSeqlDB();
         this.dbconfig = this.pgSeqlDB.dbconfig;
         this.sequelize = this.pgSeqlDB.sequelize;
         this.defineTodoItemModel();

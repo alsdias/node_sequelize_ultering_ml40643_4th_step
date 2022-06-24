@@ -11,7 +11,7 @@ class PgSeqlDB {
     dbconfig;
     sequelize;
 
-    configuration() {
+    static configuration() {
         // process.env.APP_ENV captures what was set in the run.bat in the line: SET APP_ENV=dev
         if (process.env.APP_ENV == 'dev') {
             console.log('[INFO]: database configuration set to development.')
@@ -32,22 +32,21 @@ class PgSeqlDB {
 
 
     constructor() {
-        this.dbconfig = this.configuration();
-        this.sequelize = this.connection();
+        this.dbconfig = PgSeqlDB.configuration();
+        this.sequelize = this.connection(this.dbconfig);
     }
 
 
-    connection() {
-        console.log('[INFO]: authenticating database: ' + this.dbconfig.database)
+    connection(config) {
         let sequelize = new Sequelize({
-            username: this.dbconfig.username,
-            password: this.dbconfig.password,
-            database: this.dbconfig.database,
-            host: this.dbconfig.host,
-            port: this.dbconfig.port,
-            dialect: this.dbconfig.dialect
+            username: config.username,
+            password: config.password,
+            database: config.database,
+            host: config.host,
+            port: config.port,
+            dialect: config.dialect
         });
-        sequelize.authenticate(this.dbconfig).then(function () {
+        sequelize.authenticate(config).then(function () {
             console.log('[INFO]: database authenticated');
         }, function (err) {
             console.log('[EXCP]: database authentication failed due to: ' + err)

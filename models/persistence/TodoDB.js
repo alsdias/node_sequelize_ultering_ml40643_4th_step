@@ -1,4 +1,4 @@
-const pgSeqlDB = require('./PgSeqlDB');
+const PgSeqlDB = require('./PgSeqlDB');
 var Sequelize = require('sequelize');
 
 const TodoItemDB = require('./TodoItemDB');
@@ -21,7 +21,7 @@ class TodoDB {
 
     constructor(createTable) {
         this.createTable = createTable;
-        this.pgSeqlDB = new pgSeqlDB();
+        this.pgSeqlDB = new PgSeqlDB();
         this.dbconfig = this.pgSeqlDB.dbconfig;
         this.sequelize = this.pgSeqlDB.sequelize;
         this.todoItemDB = new TodoItemDB();
