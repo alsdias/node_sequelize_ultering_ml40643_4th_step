@@ -92,52 +92,19 @@ class UserDB {
     }
 
     findById(id) {
-        this.userModel.findByPk(id).then(function (user) {
-            console.log('------------------------------------------');
-            console.log('\n[INFO]: found: ' + user.id + ", " + user.username + '\n');
-        });
+        return this.userModel.findByPk(id)
     }
 
     findByName(name) {
-        this.userModel.findAll({
+        return this.userModel.findAll({
             where: {
                 username: name
-            }
-        }).then(function (data, err) {
-            if (!data) {
-                console.log('------------------------------------------');
-                console.log('[FAIL]: user instance not found due to: ' + err);
-                console.log('------------------------------------------');
-            } else {
-                console.log('------------------------------------------');
-                //console.log(data);
-                for (let u in data) {
-                    console.log(data[u].dataValues);
-                }
-                console.log('------------------------------------------');
             }
         })
     }
 
     findAll(res) {
-        this.userModel.findAll().then(function (data, err) {
-            if (!data) {
-                console.log('------------------------------------------');
-                console.log('[FAIL]: user instance not found due to: ' + err);
-                console.log('------------------------------------------');
-            } else {
-                let list = [];
-                for (let u of data) {
-                    list.push(u.dataValues);
-                }
-                return res.render('usersList', {
-                    title: 'USERS',
-                    msg: '',
-                    users: list
-                });
-
-            }
-        })
+        return this.userModel.findAll()
     }
 
     deleteById(id) {

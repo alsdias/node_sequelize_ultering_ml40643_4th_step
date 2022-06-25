@@ -38,17 +38,50 @@ class UserSvc {
 
 
     async findById(id) {
-        return await this.userDB.findById(id);
+        return await this.userDB.findById(id).then(function (user) {
+            console.log('------------------------------------------');
+            console.log('\n[INFO]: found: ' + user.id + ", " + user.username + '\n');
+        });
     }
 
     async findByName(name) {
-        return await this.userDB.findByName(name);
+        return await this.userDB.findByName(name).then(function (data, err) {
+            if (!data) {
+                console.log('------------------------------------------');
+                console.log('[FAIL]: user instance not found due to: ' + err);
+                console.log('------------------------------------------');
+            } else {
+                //console.log(data);
+                if(data.length > 0) {
+
+                }
+                for (let u in data) {
+                    console.log(data[u].dataValues);
+                }
+            }
+        });
     }
 
     async findAll(res) {
-        return await this.userDB.findAll(res);
-    }
+        return await this.userDB.findAll(res).then(function (data, err) {
+            if (!data) {
+                console.log('------------------------------------------');
+                console.log('[FAIL]: user instance not found due to: ' + err);
+                console.log('------------------------------------------');
+            } else {
+                let list = [];
+                for (let u of data) {
+                    list.push(u.dataValues);
+                }
+                return res.render('usersList', {
+                    title: 'USERS',
+                    msg: '',
+                    users: list
+                });
 
+            }
+        });
+    }
 }
 
 module.exports = UserSvc;
