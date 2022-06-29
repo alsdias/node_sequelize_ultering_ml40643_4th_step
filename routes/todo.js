@@ -43,8 +43,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/list', function (req, res, next) {
-  let svc = new TodoSvc();
-  svc.list(res);
+  todoSvc.list(res);
 });
 
 router.get('/tools', function (req, res, next) {
@@ -145,9 +144,6 @@ router.get('/', function(req, res, next) {
   todoSvc.list(res);
 });
 
-router.get('/listall', function(req, res, next) {
-  todoSvc.list(res);
-});
 
 router.get('/titles', function(req, res, next) {
   todoSvc.selectTitles(res);
