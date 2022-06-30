@@ -57,7 +57,7 @@ class TodoSvc extends DbSvc {
 			for(let todo of data) {
 				olist.push(todo.dataValues);
 			}
-			console.log(data)
+			//console.log(data)
 			return res.render('todos', {
 				title: 'My task list',
 				msg: '',

@@ -78,7 +78,7 @@ class TodoDB {
     bulk(entities) {
         this.todo.bulkCreate(entities, null)
             .then(function (models) {
-                console.log(models);
+                //console.log(models);
             });
     }
 

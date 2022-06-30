@@ -39,14 +39,32 @@
                 <% sdos.forEach(todo => { %>
                     <div class="row" style="padding: 2px;">
                         <div class="col-md-2">
-                            <input onclick="openTodo(this)" name="todo_id" id="todo_id" type="text" readonly class="" value="<%=todo.id%>" style="height: 25px; width: 96%; padding-left: 25px; padding-top: 0px; font-weight: 700; color: #6f6c6c; font-size: 19px; border-color: transparent;">
+                            <input onclick="openTodo(this)" name="todo_id" id="todo_id" type="text" readonly class="" value="<%=todo.id%>" style="height: 25px; width: 96%; padding-left: 25px; margin-top: 0px; font-weight: 700; color: #6f6c6c; font-size: 19px; border-color: transparent;">
                         </div>
                         <div class="col-md-5">
                             <p>&nbsp;</p>
                         </div>
                         <div class="col-md-3" style="text-align: center;">
-                            <div id="btn_update_todo" class="btn btn-primary icon-config icon-update20g" style="margin-top: 0px; padding-right: 25px;" onclick="updateTodo()"></div>
-                            <button id="btn_delete_todo" type="button" class="btn btn-primary icon-config icon-delete20g" data-toggle="modal" data-target="#deleteTodoModal" style="margin-top: 0px; padding-right: 25px;"></button>
+                            <div id="btn_update_todo" class="btn btn-primary icon-config icon-update20g" style="margin-top: 0px; margin-right: 25px;" onclick="updateTodo('<%=todo.id%>')"></div>
+                            <!-- xxModal CONFIRM TODO DELETION -->
+                            <button id="btn_delete_todo_<%=todo.id%>" type="button" class="btn btn-primary icon-config icon-delete20g" data-toggle="modal" data-target="#deleteTodoModal<%=todo.id%>" style="margin-top: 0px; margin-right: 25px;"></button>
+                                <div class="modal fade" id="deleteTodoModal<%=todo.id%>" tabindex="-1" role="dialog" aria-labelledby="deleteTodoModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteTodoModalLabel">CONFIRM TODO DELETION OF <%=todo.id%>?</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-primary" onclick="deleteTodo('<%=todo.id%>')">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             <button id="btn_create_todo" type="button" class="btn btn-primary icon-config icon-create20g" data-toggle="modal" data-target="#createTodoModal" style="margin-top: 0px;"></button>
                         </div>
                         <div class="col-md-2">
@@ -87,23 +105,6 @@
                 </div>
             </div>
 
-            <!-- xxModal CONFIRM TODO DELETION -->
-            <div class="modal fade" id="deleteTodoModal" tabindex="-1" role="dialog" aria-labelledby="deleteTodoModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteTodoModalLabel">CONFIRM TODO DELETION?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                            <button type="button" class="btn btn-primary" onclick="deleteTodo()">Yes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- /.container -->
             <!-- Bootstrap core JavaScript
@@ -145,8 +146,7 @@
                 XHR.send(json);
             }
 
-            function deleteTodo(obj) {
-                let id = document.getElementById('todo_id').value;
+            function deleteTodo(id) {
                 let kvdata = {id: id};
                 deleteTodoByIdAction(kvdata);
             }
